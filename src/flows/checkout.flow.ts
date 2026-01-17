@@ -11,7 +11,10 @@ export async function checkoutUntilPaymentReview(page: Page, shipping: ShippingD
   await cart.startCheckout();
   await ship.fillShippingForm(shipping);
   await ship.selectNonPickupShipping();
+
+  await page.waitForTimeout(2000); // Wait for cart to update
+
   await ship.goNext();
 
-  await pay.assertReviewDetails(["Fluffy Maracas", "Super Squeaky"]);
+  await pay.assertReviewDetails(shipping);
 }

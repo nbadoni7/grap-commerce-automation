@@ -1,3 +1,5 @@
+import { testData } from "../config/testData";
+import { X } from "../locators/xpaths";
 import { BasePage } from "./BasePage";
 
 export type ShippingData = {
@@ -14,27 +16,28 @@ export type ShippingData = {
 
 export class CheckoutShippingPage extends BasePage {
   async fillShippingForm(d: ShippingData) {
-    await this.fill('input[name="email"]', d.email);
-    await this.fill('input[name="firstname"]', d.firstName);
-    await this.fill('input[name="lastname"]', d.lastName);
-    await this.fill('input[name="street[0]"]', d.street);
-    await this.fill('input[name="houseNumber"]', d.houseNumber);
-    await this.fill('input[name="postcode"]', d.postcode);
-    await this.fill('input[name="city"]', d.city);
+    await this.fill('//input[@name="email"]', d.email);
+    await this.fill('//input[@name="firstname"]', d.firstName);
+    await this.fill('//input[@name="lastname"]', d.lastName);
+    await this.fill('//input[@name="street"]', d.street);
+    await this.fill('//input[@name="houseNumber"]', d.houseNumber);
+    await this.fill('//input[@name="postcode"]', d.postcode);
+    await this.fill('//input[@name="city"]', d.city);
 
-    // Country: many checkout UIs use select/combobox; this is a safe “try-click by text”
-    await this.$("Country").click().catch(() => {});
-    await this.$(d.country).click().catch(() => {});
+    // Click the Country MUI Select
+    await this.click('//label[contains(text(), "Country")]/following-sibling::div//div[@role="combobox"]');
 
-    await this.fill('input[name="telephone"]', d.telephone);
+    // Click the option by text
+    await this.click(`//li[@data-value="${d.country}"]`);
+
+    await this.fill('//input[@name="telephone"]', d.telephone);
   }
 
   async selectNonPickupShipping() {
-    // non-pickup example (site labels may vary)
-    await this.$("Flat Rate Fixed").click();
+    await this.click('//*[contains(text(), "Flat Rate Fixed")]/ancestor::div[@role="button"]');
   }
 
   async goNext() {
-    await this.$("Next").click();
+    await this.click(X.getButtonById(testData.nextLabel.toLowerCase()));
   }
 }

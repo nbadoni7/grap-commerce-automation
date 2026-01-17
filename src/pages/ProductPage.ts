@@ -1,6 +1,7 @@
 import { BasePage } from "./BasePage";
 import { X } from "../locators/xpaths";
 import { expect } from "@playwright/test";
+import { testData } from "../config/testData";
 
 export class ProductPage extends BasePage {
   sizeOption(sizeLabel: string) {
@@ -14,10 +15,18 @@ export class ProductPage extends BasePage {
   }
 
   async addToCart() {
-    await this.click(X.addToCart);
+    await this.click(X.getButtonByText(testData.addToCartLabel));
+  }
+
+  async cancelViewCart() {
+    await this.click(X.getButtonByAria(testData.closeLabel));
+  }
+
+  async goBack() {
+    await this.click(X.getButtonByAria(testData.goBackLabel));
   }
 
   async goToCart() {
-    await this.click(X.goToCart);
+    await this.click(X.getAnchorByText(testData.viewShoppingCartLabel));
   }
 }

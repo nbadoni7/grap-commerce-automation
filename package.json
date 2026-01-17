@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "report:html": "playwright show-report",

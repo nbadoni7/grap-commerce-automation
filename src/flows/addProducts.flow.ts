@@ -13,9 +13,10 @@ export async function addTwoProductsFromWomen(page: Page) {
   await women.openFluffyMaracas();
   await pdp.selectSize(testData.sizeLabel);
   await pdp.addToCart();
+  await pdp.cancelViewCart();
 
   // Navigate back via browser (UI back button could also be used if present)
-  await page.goBack();
+  await pdp.goBack();
 
   // 2) Super Squeaky
   await women.openSuperSqueaky();
@@ -24,4 +25,6 @@ export async function addTwoProductsFromWomen(page: Page) {
 
   // Go to cart via UI
   await pdp.goToCart();
+
+  await page.waitForTimeout(2000); // Wait for cart to update
 }
