@@ -1,28 +1,57 @@
-export const testData = {
-  products: {
-    fluffyMaracasName: "Fluffy Maracas",
-    superSqueakyName: "Super Squeaky"
+
+
+import { TestData } from '../models/testData';
+
+export const testData: TestData = {
+  products: [
+    {
+      name: "Fluffy Maracas",
+      size: "36-40",
+      price: 6.80
+    },
+     {
+      name: "Super Squeaky",
+      size: "36-40",
+      price: 6.80
+    }
+  ],
+  labels: {
+    addToCart: "Add to Cart",
+    cart: "Cart",
+    viewShoppingCart: "View shopping cart",
+    goBack: "Back",
+    close: "Close",
+    next: "Next",
+    startCheckout: "Start Checkout",
+    payment: "Payment",
+    confirmationTrackTrace: "Confirmation + Track & trace",
+    shippingAddress: "Shipping address",
+    billingAddress: "Billing address",
+    products: "Products",
+    shippingFlatRateFixed: "Shipping ({method})",
+    grandTotal: "Grand total",
   },
-  sizeLabel: "36-40",
-  addToCartLabel: "Add to Cart",
-  viewShoppingCartLabel: "View shopping cart",
-  goBackLabel: "Back",
-  closeLabel: "Close",
-  nextLabel: "Next",
-  startCheckoutLabel: "Start Checkout",
-  grandTotalLabel: "Grand total",
-  cart: {
-    sizeAssertionText: "Size 36 to 40"
+  categories: {
+    women: "Women"
   },
   shipping: {
-    email: "test.user@example.com",
-    firstName: "Test",
-    lastName: "User",
-    street: "Fusionopolis View",
-    houseNumber: "01",
-    postcode: "138577",
-    city: "Singapore",
-    country: "SG",
-    telephone: "000-000-0000"
+    default: "Flat Rate Fixed",
+    methods: [
+      {
+        name: "Flat Rate Fixed",
+        price: 8.50
+      }
+    ],
+    address: {
+      email: "test.user@example.com",
+      firstName: "Test",
+      lastName: "User",
+      street: "Fusionopolis View",
+      houseNumber: "01",
+      postcode: "138577",
+      city: "Singapore",
+      country: "SG",
+      telephone: "000-000-0000"
+    }
   }
 };

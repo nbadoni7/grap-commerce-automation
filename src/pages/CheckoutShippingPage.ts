@@ -1,21 +1,11 @@
-import { testData } from "../config/testData";
+import { expect } from "@playwright/test";
 import { X } from "../locators/xpaths";
+import { Address } from "../models/address";
+import { ShippingMethod } from "../models/shippingMethods";
 import { BasePage } from "./BasePage";
 
-export type ShippingData = {
-  email: string;
-  firstName: string;
-  lastName: string;
-  street: string;
-  houseNumber: string;
-  postcode: string;
-  city: string;
-  country: string;
-  telephone: string;
-};
-
 export class CheckoutShippingPage extends BasePage {
-  async fillShippingForm(d: ShippingData) {
+  async fillShippingForm(d: Address) {
     await this.fill('//input[@name="email"]', d.email);
     await this.fill('//input[@name="firstname"]', d.firstName);
     await this.fill('//input[@name="lastname"]', d.lastName);
@@ -33,11 +23,12 @@ export class CheckoutShippingPage extends BasePage {
     await this.fill('//input[@name="telephone"]', d.telephone);
   }
 
-  async selectNonPickupShipping() {
-    await this.click('//*[contains(text(), "Flat Rate Fixed")]/ancestor::div[@role="button"]');
+  async selectNonPickupShipping(method: ShippingMethod) {
+    await this.click(`//*[contains(text(), "${method.name}")]/ancestor::div[@role="button"]`);
+    await expect(this.$(`//*[contains(text(), "${method.name}")]/ancestor::div[@role="button"]//div[contains(@class, "ActionCard-price")]//span[contains(., "${this.currency + method.price}")]`)).toBeVisible();
   }
 
   async goNext() {
-    await this.click(X.getButtonById(testData.nextLabel.toLowerCase()));
+    await this.click(X.getButtonById(this.labels.next.toLowerCase()));
   }
 }

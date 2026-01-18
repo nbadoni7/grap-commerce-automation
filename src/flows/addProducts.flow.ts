@@ -2,29 +2,33 @@ import type { Page } from "@playwright/test";
 import { WomenPage } from "../pages/WomenPage";
 import { ProductPage } from "../pages/ProductPage";
 import { testData } from "../config/testData";
+import { Product } from "../models/product";
+import { ENV } from "../config/env";
 
-export async function addTwoProductsFromWomen(page: Page) {
+export async function addProducts(page: Page, products: Product[]) {
   const women = new WomenPage(page);
   const pdp = new ProductPage(page);
 
-  await women.assertProductsVisible();
+  // Assert the products whether they are visible or not
+  await Promise.all(products.map(async product => {
+    await women.assertProductsVisible(product.name);
+  }));
 
-  // 1) Fluffy Maracas
-  await women.openFluffyMaracas();
-  await pdp.selectSize(testData.sizeLabel);
-  await pdp.addToCart();
-  await pdp.cancelViewCart();
+  // Navigate, select size and add to cart
+  for (const product of products) {
+      await women.navigateToProductPage(product.name);
+      await pdp.selectSize(product.size);
+      await pdp.assertPrice(women.currency + product.price);
+      await pdp.addToCart();
+      await pdp.cancelViewCart();
 
-  // Navigate back via browser (UI back button could also be used if present)
-  await pdp.goBack();
-
-  // 2) Super Squeaky
-  await women.openSuperSqueaky();
-  await pdp.selectSize(testData.sizeLabel);
-  await pdp.addToCart();
+      // Navigate back via browser (UI back button could also be used if present)
+      await pdp.goBack();
+  }
 
   // Go to cart via UI
   await pdp.goToCart();
 
-  await page.waitForTimeout(2000); // Wait for cart to update
+  // Added a wait for cart to update and render the cart UI
+  await page.waitForTimeout(2000);
 }

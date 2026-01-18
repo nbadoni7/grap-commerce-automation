@@ -1,7 +1,6 @@
 import { BasePage } from "./BasePage";
 import { X } from "../locators/xpaths";
 import { expect } from "@playwright/test";
-import { testData } from "../config/testData";
 
 export class ProductPage extends BasePage {
   sizeOption(sizeLabel: string) {
@@ -14,19 +13,24 @@ export class ProductPage extends BasePage {
     await expect(this.$(this.sizeOption(sizeLabel))).toBeVisible();
   }
 
+  async assertPrice(price: string) {
+    const priceLocator = this.$(X.productPriceByText(price));
+    await expect(priceLocator).toBeVisible();
+  }
+
   async addToCart() {
-    await this.click(X.getButtonByText(testData.addToCartLabel));
+    await this.click(X.getButtonByText(this.labels.addToCart));
   }
 
   async cancelViewCart() {
-    await this.click(X.getButtonByAria(testData.closeLabel));
+    await this.click(X.getButtonByAria(this.labels.close));
   }
 
   async goBack() {
-    await this.click(X.getButtonByAria(testData.goBackLabel));
+    await this.click(X.getButtonByAria(this.labels.goBack));
   }
 
   async goToCart() {
-    await this.click(X.getAnchorByText(testData.viewShoppingCartLabel));
+    await this.click(X.getAnchorByAria(this.labels.cart));
   }
 }
