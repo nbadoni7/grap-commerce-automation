@@ -24,7 +24,6 @@ build/
 *.swp
 *.swo
 *~
-.DS_Store
 
 # Environment variables
 .env
@@ -33,7 +32,6 @@ build/
 
 # OS
 Thumbs.db
-.DS_Store
 
 # Logs
 *.log

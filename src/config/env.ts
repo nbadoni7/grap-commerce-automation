@@ -1,5 +1,5 @@
 export const ENV = {
   localePath: "/en-gb",
-  defaultSizeLabel: "36-41",
+  defaultSizeLabel: "36-40",
   timeoutMs: 30_000,
 };
