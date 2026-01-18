@@ -6,6 +6,7 @@ yarn.lock
 # Playwright
 /test-results/
 /allure-results/
+/playwright-report/
 /blob-report/
 /playwright/.cache/
 
