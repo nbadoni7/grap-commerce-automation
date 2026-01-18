@@ -6,7 +6,7 @@ export default defineConfig({
   retries: 0,
   use: {
     baseURL: "https://graphcommerce.vercel.app/en-gb",
-    headless: false,
+    headless: true,
     trace: "on-first-retry",
     screenshot: "only-on-failure"
   },

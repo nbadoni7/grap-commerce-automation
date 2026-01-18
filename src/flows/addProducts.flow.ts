@@ -1,9 +1,7 @@
 import type { Page } from "@playwright/test";
 import { WomenPage } from "../pages/WomenPage";
 import { ProductPage } from "../pages/ProductPage";
-import { testData } from "../config/testData";
 import { Product } from "../models/product";
-import { ENV } from "../config/env";
 
 export async function addProducts(page: Page, products: Product[]) {
   const women = new WomenPage(page);

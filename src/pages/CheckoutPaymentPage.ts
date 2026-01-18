@@ -14,7 +14,11 @@ export class CheckoutPaymentPage extends BasePage {
     );
 
     // Assert Confirmation + Track & trace section
-    await expect(this.$(`//div[contains(text(), "${this.labels.confirmationTrackTrace}")]`)).toBeVisible();
+    const confirmationTrackTraceElement = this.$(`//div[contains(text(), "${this.labels.confirmationTrackTrace}")]`);
+    await confirmationTrackTraceElement.scrollIntoViewIfNeeded();
+    await expect(confirmationTrackTraceElement).toBeVisible();
+    
+    // Assert email
     await expect(this.$(`//p[contains(text(), "${shippingAddress.email}")]`)).toBeVisible();
 
     // Assert Shipping address
@@ -38,13 +42,21 @@ export class CheckoutPaymentPage extends BasePage {
     await expect(billingAddressBox.locator(`text=/${billingAddress.city}/`)).toHaveCount(2);
 
     // Assert order summary
-    const productBox = this.$(`//div[contains(text(), "${this.labels.products}")]/parent::div`);
-    await expect(productBox).toContainText(cartTotal);
-    const shippingBox = this.$(
+    
+    // Product total
+    const productTotalEle = this.$(`//div[contains(text(), "${this.labels.products}")]/parent::div`);
+    productTotalEle.scrollIntoViewIfNeeded();
+    await expect(productTotalEle).toContainText(cartTotal);
+
+    // Shipping cost
+    const shippingTotalEle = this.$(
       `//div[contains(text(), "${this.labels.shippingFlatRateFixed.replace("{method}", this.defaultShippingMethod?.name ?? "")}")]/parent::div`,
     );
-    await expect(shippingBox).toContainText(shippingCost);
-    const grandTotalBox = this.$(`//div[contains(text(), "${this.labels.grandTotal}")]/parent::div`);
-    await expect(grandTotalBox).toContainText(grandTotal);
+    await expect(shippingTotalEle).toContainText(shippingCost);
+
+    // Grand total
+    const grandTotalEle = this.$(`//div[contains(text(), "${this.labels.grandTotal}")]/parent::div`);
+    grandTotalEle.scrollIntoViewIfNeeded();
+    await expect(grandTotalEle).toContainText(grandTotal);
   }
 }
