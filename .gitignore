@@ -32,6 +32,7 @@ build/
 
 # OS
 Thumbs.db
+.DS_Store
 
 # Logs
 *.log
